@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <!-- Custom Object Tab, Web Tab and Visualforce tab -->
+      <types>
+          <members>*</members>
+          <name>CustomTab</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>ApexClass</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>ApexComponent</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>ApexPage</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>ApexTrigger</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>CustomApplication</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>CustomField</name>
+      </types>
+
+      <types>
+          <members>*</members>
+          <name>CustomTab</name>
+      </types>
+  <!--     For retrieving and deploying Email Templates, folder name is mandatory       -->
+      <types>
+          <members>unfiled$public/Student_Loan</members>
+  <members>unfiled$public/Student_Loan24hs</members>
+  <members>unfiled$public/Student_Loan24hsafter</members>
+          <name>EmailTemplate</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>HomePageComponent</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>HomePageLayout</name>
+      </types>
+  <!-- Home Page Custom Link -->
+      <types>
+          <members>*</members>
+          <name>CustomPageWebLink</name>
+      </types>
+     <types> 
+          <members>Book__c.All</members>
+          <members>Book_Copy__c.All</members>
+          <members>Book_Copy__c.Available_Copies</members>
+          <members>Book_Copy__c.Pending_Loans</members>
+          <members>Loan__c.All</members>
+          <name>ListView</name> 
+     </types>
+      <types>
+              <members>Book__c-Book Layout Librarian</members>
+              <members>Book__c-Book Layout Students</members>
+              <members>Book_Copy__c-Book Copy Layout</members>
+              <members>Loan__c-Librarian Loan Layout</members>
+              <members>Loan__c-Student Loan Layout</members>
+
+          <name>Layout</name>
+      </types>
+      <types>
+    <members>Admin</members>
+          <members>Student</members>
+          <members>Librarian</members>
+          <name>Profile</name>
+      </types>
+
+
+      <types>
+          <members>*</members>
+          <name>StaticResource</name>
+      </types>
+
+      <types>
+          <members>*</members>
+          <name>PermissionSet</name>
+      </types>
+
+       <types>
+         
+          <name>QuickAction</name>
+      </types>
+      <!-- 
+   Workflow includes WorkflowFieldUpdate,
+   WorkflowAlert, WorkflowOutboundMessage, WorkflowRule
+      -->
+      <types>
+         
+          <name>Workflow</name>
+      </types>  
+      <types>
+            <members>Book_Copy__c.Add_Date</members>
+            <members>Book_Copy__c.Update_Available_Date</members>
+          <name>WorkflowFieldUpdate</name>
+      </types>
+      <types>
+              <members>Loan__c.Send_Email_if_not_returned</members>
+              <members>Loan__c.Send_Email_to_Student</members>
+              <members>Loan__c.Send_Email_24hs_Before</members>
+          <name>WorkflowAlert</name>
+      </types>
+
+      <types>
+                  <members>Book_Copy__c.Add Date to Book if unavailable</members>
+                  <members>Book_Copy__c.Update Available Date</members>
+                  <members>Loan__c.Loan Mails to Student</members>
+                  <members>Loan__c.Return Book</members>
+          <name>WorkflowRule</name>
+      </types>
+      <types>
+         
+          <name>WorkflowTask</name>
+      </types>
+  <!--        Custom Button/Link         -->
+     <types>
+         
+          <name>WebLink</name>  
+      </types>
+
+  <!--        Validation Rules        -->
+      <types>
+<members>*</members>
+
+          <name>ValidationRule</name>
+      </types>   
+  <!--        Record Types        -->
+      <types>
+   <members>*</members>
+          <name>RecordType</name>
+      </types> 
+  <!--       Role        -->
+      <types>
+            <members>*</members>
+            <name>Role</name>
+      </types>
+  <!--       Queue        -->
+      <types>
+            <members>*</members>
+            <name>Queue</name>
+      </types>
+  <!--       Public Group        -->
+      <types>
+            <members>*</members>
+            <name>Group</name>
+      </types>
+  <!--      Custom Labels        -->
+      <types>
+            <members>*</members>
+            <name>CustomLabel</name>
+      </types>
+  <!--      LetterHead       -->
+   <types>
+    <members>*</members>
+    <name>Letterhead</name>
+   </types> 
+  <!--      Process Builder and Flow  -->
+      <types>
+   <members>Return_Book-1</members>
+ <members>Update_Book_Copy_Status-11</members>
+ <members>Update_Book_Status_When_Changing_it_On_Loan-3</members>
+          <name>Flow</name>
+      </types>
+      <types>
+    <members>Book__c.CreateBookCopy</members>
+    <members>Loan__c.Return_Book</members>
+  <name>QuickAction</name>
+      </types>
+  <!-- Platform Event -->
+   <types>
+    <members>*</members>
+          <name>CustomObject</name>
+      </types>
+  <!-- Sharing Rule -->
+      <types>
+          <members>*</members>
+          <name>SharingCriteriaRule</name>
+      </types>
+      <types>
+          <members>*</members>
+          <name>SharingOwnerRule</name>
+
+      </types>
+  <!-- Lightning Component -->
+   <types>
+     <members>*</members>
+
+          <name>AuraDefinitionBundle</name>
+      </types>
+  <types>
+      <members>*</members>
+      <name>FlexiPage</name>
+  </types>
+
+
+    <version>38.0</version>
+</Package>

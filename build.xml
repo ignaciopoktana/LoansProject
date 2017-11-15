@@ -1,0 +1,33 @@
+<project name="Sample usage of Salesforce Ant tasks" basedir="." xmlns:sf="antlib:com.salesforce">
+
+    <property file="build.properties"/>
+    <property environment="env"/>
+
+    <!-- Setting default value for username, password and session id properties to empty string
+         so unset values are treated as empty. Without this, ant expressions such as ${sf.username}
+         will be treated literally.
+    -->
+    <condition property="username" value=""> <not> <isset property="username"/> </not> </condition>
+    <condition property="password" value=""> <not> <isset property="password"/> </not> </condition>
+    <condition property="sessionId" value=""> <not> <isset property="sessionId"/> </not> </condition>
+
+    <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+        <classpath>
+            <pathelement location="./ant-salesforce.jar" />
+        </classpath>
+    </taskdef>
+
+    <!-- Retrieve an unpackaged set of metadata from your org -->
+    <!-- The file retrieve-package.xml lists what is to be retrieved -->
+    <target name="retrieveDev">
+      <mkdir dir="metadata"/>
+      <!-- Retrieve the contents into another directory -->
+      <sf:retrieve username="ignaciop@ignaciop.training.oktana.io.dev" password="salesforce1rRJ7MeW79blvmLet6IkALPzO" serverurl="https://test.salesforce.com" retrieveTarget="metadata" unpackaged="retrieve-package.xml"/>
+    </target>
+
+
+    <!-- Deploy the unpackaged set of metadata retrieved with retrieveDev and run tests in this organization's namespace only-->
+    <target name="deployQA">
+      <sf:deploy username="ignaciop@ignaciop.training.oktana.io.qa2" password="salesforce1f1JtyrVl4fMC6GiozCqWajVm" serverurl="https://test.salesforce.com" deployRoot="metadata"/>
+    </target>
+</project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Share_Loans_With_Librarians</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Share Loans With Librarians</label>
+        <sharedTo>
+            <role>Librarian</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Student</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

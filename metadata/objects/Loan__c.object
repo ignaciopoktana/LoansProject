@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>LoansHomePage</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Loan_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>BookName__c</fullName>
+        <externalId>false</externalId>
+        <formula>Book_Copy__r.Book__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Book Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Book_Copy__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Book Copy</label>
+        <lookupFilter>
+            <active>false</active>
+            <filterItems>
+                <field>Book_Copy__c.Active__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Book_Copy__c</referenceTo>
+        <relationshipLabel>Loans (Book Copy)</relationshipLabel>
+        <relationshipName>TotalLoans</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Dummy_Book_Copy__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Dummy Book Copy</label>
+        <referenceTo>Book_Copy__c</referenceTo>
+        <relationshipLabel>Loans (Dummy Book Copy)</relationshipLabel>
+        <relationshipName>Loans</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Expected_return_date__c</fullName>
+        <defaultValue>today()+ 3</defaultValue>
+        <externalId>false</externalId>
+        <label>Expected return date</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Loan_Date__c</fullName>
+        <defaultValue>today()</defaultValue>
+        <externalId>false</externalId>
+        <label>Loan Date</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Returned__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Returned</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Student__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Student</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Loans</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Loan</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Loan_Date__c</columns>
+        <columns>Expected_return_date__c</columns>
+        <columns>Returned__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Pending_Loans</fullName>
+        <columns>NAME</columns>
+        <columns>Book_Copy__c</columns>
+        <columns>BookName__c</columns>
+        <columns>Loan_Date__c</columns>
+        <columns>Expected_return_date__c</columns>
+        <columns>Student__c</columns>
+        <columns>Returned__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Returned__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Pending Loans</label>
+    </listViews>
+    <nameField>
+        <displayFormat>L-{0000}</displayFormat>
+        <label>Loan Id</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Loans</pluralLabel>
+    <recordTypes>
+        <fullName>Librarian_Home_Page</fullName>
+        <active>false</active>
+        <label>Librarian Home Page</label>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Book_Copy__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>BookName__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Loan_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Expected_return_date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Returned__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Student__c</customTabListAdditionalFields>
+        <searchFilterFields>Book_Copy__c</searchFilterFields>
+        <searchFilterFields>BookName__c</searchFilterFields>
+        <searchResultsAdditionalFields>Book_Copy__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>BookName__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Loan_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Returned__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Expected_return_date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Student__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Check_changes_after_Returning_Book</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(ISCHANGED( Returned__c ), PRIORVALUE(Returned__c) = true),
+   AND(ISCHANGED(  Loan_Date__c  ), Returned__c = true),
+   AND(ISCHANGED(  Expected_return_date__c  ),Returned__c = true),
+   AND(ISCHANGED(   Book_Copy__c ),Returned__c = true)
+)</errorConditionFormula>
+        <errorMessage>Once a Book is returned the Loan can&apos;t be modified</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_if_copy_is_available</fullName>
+        <active>true</active>
+        <errorConditionFormula>(isnew() &amp;&amp; Book_Copy__r.Active__c = false)  || 
+(ischanged( Book_Copy__c )= true &amp;&amp;  Book_Copy__r.Active__c = false)</errorConditionFormula>
+        <errorDisplayField>Book_Copy__c</errorDisplayField>
+        <errorMessage>An available copy must be selected</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Forbid_Creating_Returned_Loans</fullName>
+        <active>true</active>
+        <errorConditionFormula>and(IsNew(),  Returned__c = true)</errorConditionFormula>
+        <errorMessage>Loans can&apos;t be returned on creation</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Forbid_future_loans</fullName>
+        <active>true</active>
+        <errorConditionFormula>Loan_Date__c &gt; Today()</errorConditionFormula>
+        <errorMessage>Loan date can&apos;t be a future date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Loans_only_for_Students</fullName>
+        <active>true</active>
+        <errorConditionFormula>Student__r.Profile.Name != &apos;Student&apos;</errorConditionFormula>
+        <errorDisplayField>Student__c</errorDisplayField>
+        <errorMessage>Loans can only be registered against Students</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Return_Date_cant_be_prior_to_loan_date</fullName>
+        <active>true</active>
+        <errorConditionFormula>Loan_Date__c &gt; Expected_return_date__c</errorConditionFormula>
+        <errorMessage>Return date can&apos;t be prior to Loan Date</errorMessage>
+    </validationRules>
+</CustomObject>

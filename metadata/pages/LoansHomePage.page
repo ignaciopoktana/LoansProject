@@ -1,0 +1,310 @@
+<apex:page controller="LoanSearchController" showHeader="false" standardStylesheets="false" sidebar="false" docType="html-5.0"  applyBodyTag="False" applyHtmlTag="False" tabStyle="Loan__c"
+
+action="{!if($Profile.Name !='Student', 
+    null, 
+    urlFor($Action.Loan__C.Tab, $ObjectType.Loan__c,
+    null, true))}"
+>
+  <style>
+         body
+         {
+         font-family: arial, sans-serif;
+         margin:10%;
+         }
+         tr
+         {    
+            border-width:4px;
+            border-style:solid;
+         }
+         .headerTitulo
+         {
+            font-size: 46px;
+            font-weight: 1600;
+            /*color: #fff!important;*/
+            text-align: left;
+            /*text-transform: uppercase;
+            background: #4e75a3;*/
+            display: block;
+            padding: 10px;
+            margin:60px;
+        }
+        .SearchPanel
+        {
+            text-align: left;
+            border-radius:   25px;
+            border-width:    4px;
+            border-style:    solid;
+            border-color:    #000000;
+            padding-bottom:20px;
+        }  
+        .OverBlock
+        {
+            width: 300px;
+            background:white;
+            margin-top:-65px;
+            margin-left:10px;
+            margin-right:0px;
+            padding:40px;
+            
+        }  
+        .SearchBar
+        {
+            align:center;
+            Color:Black;          
+            width: 600px;
+            height:20px;
+            font-size:20px;
+            font-color:black;
+            background:#CCE5FF;
+            text-align: left; 
+            margin-left:80%;
+            
+        }
+              .SearchLoanBar
+        {
+            align:center;
+            Color:Black;          
+            width: 600px;
+            height:20px;
+            font-size:20px;
+            font-color:black;
+            background:#CCE5FF;
+            text-align: left; 
+            margin-left:0%;
+            margin-right:1%;
+        }
+         .Button
+        {
+            text-align: center;  
+            
+            overflow: hidden; 
+            border: 2px solid #0099E6; 
+            -webkit-border-radius: 13px; 
+            -moz-border-radius: 13px; 
+            border-radius: 13px;
+            font: normal 20px Arial, Helvetica, sans-serif;
+            color:white; 
+            background: #00AAFF;
+            padding-left:10px;
+            height: 30px;
+            margin-left:580%;
+            
+
+        }
+         .LoanButton
+        {
+            text-align: center;  
+            overflow: hidden; 
+            border: 2px solid #0099E6; 
+            -webkit-border-radius: 13px; 
+            -moz-border-radius: 13px; 
+            border-radius: 13px;
+            font: normal 20px Arial, Helvetica, sans-serif;
+            color:white; 
+            background: #00AAFF;
+            padding-left:10px;
+            height: 30px;
+            margin-left:570%;
+            margin-top:15px;
+            
+
+        }
+        .SearchButton
+        {
+            text-align: center;  
+            height: 30px;
+            overflow: hidden; 
+            border: 2px solid #0099E6; 
+            -webkit-border-radius: 13px; 
+            -moz-border-radius: 13px; 
+            border-radius: 13px;
+            font: normal 20px Arial, Helvetica, sans-serif;
+            color:white; 
+            background: #00AAFF;
+            padding-left:10px;
+            margin-left:40%;
+        }
+        
+        
+        .TableLine
+        {
+            table-layout:fixed;
+            margin-left:20%;
+            margin-right:10%;
+            margin_bottom:40px;
+            text-align: left; 
+            width: 60%;             
+            overflow: hidden; 
+            border: 2px solid #0099E6; 
+            -webkit-border-radius: 13px; 
+            -moz-border-radius: 13px; 
+            border-radius: 13px;
+        }
+        .TableLineActionHeader
+        {
+            font: normal 20px Arial, Helvetica, sans-serif;
+            color:white; 
+            background: #00AAFF;
+            padding-left:10px;
+            height: 30px;
+            border: 1px solid #0099E6;
+             
+        }
+        .TableLineActionCell
+        {
+            font: normal 16px Arial, Helvetica, sans-serif;
+            color:white; 
+            background: white;
+            padding-left:10px;
+            height: 30px;           
+            border: 1px solid #0099E6;
+            
+        }
+        .TableLineStudentCell
+        {
+            font: normal 16px Arial, Helvetica, sans-serif;
+            color:black; 
+            background: white;
+            padding-left:10px;
+            height: 30px; 
+            border: 1px solid #0099E6;
+        }
+        .StudentName
+        {
+            font: normal 24px Arial, Helvetica, sans-serif;
+            color:black;
+            margin-bottom:2%;
+            margin_left:1%;
+        }
+        .WarningBlock
+        {       
+            font: normal 24px Arial, Helvetica, sans-serif;
+            color:black; 
+            background: #ffff00;
+            height:90PX;
+            width:590PX;
+            text-align:center;
+            border:1px solid silver;
+            display: table-cell;
+            vertical-align:middle;
+            //border: 2px solid black;
+            -webkit-border-radius: 13px; 
+            -moz-border-radius: 13px; 
+            border-radius: 13px;
+        
+        }
+  </style>
+  <apex:slds />
+
+   <apex:form >
+  
+  <body >
+
+
+                                                                     
+                                                                      
+
+            <h1 class="headerTitulo">Library Loans</h1>
+            
+                                                                        <div class="SearchPanel">
+            <h2 Class="OverBlock">Student Search By Name</h2>
+                    
+           
+                                                                   
+
+                    
+ 
+
+
+           
+      <apex:pageBlock >
+      
+      
+ <apex:pageBlockSection id="SearchUsersBar">     
+                     
+                        <apex:inputText styleclass="SearchBar" value="{!searchStudent}" rendered="{!LoansListSize=0}"/>
+                        <apex:commandButton id="SearchButton" Value="Search" action="{!searchUsers}" styleClass="Button"  rendered="{!LoansListSize=0}" reRender="UsersTable,Loan_List"/>
+                        <br/><br/><br/><br/>
+                    
+</apex:pageBlockSection>      
+      
+ <apex:pageBlockSection id="ReturnButton">
+ 
+                <apex:commandButton id="ReturntoSearch" Value="Return to Search" styleClass="SearchButton" action="{!clearLoans}" rendered="{!LoansListSize>0}" reRender="SearchUsersBar,Loans_List,LoanBookCopy,UsersTable,ReturnButton,users_list,StudentFound"/>
+            <br/><br/><br/>
+</apex:pageBlockSection> 
+
+
+
+     
+<apex:pageBlockSection id="users_list" >
+                   <apex:pageBlockTable value="{!allusers}" var="Student" styleClass="TableLine" id="UsersTable" rendered="{!LoansListSize=0}">
+                      
+                             <apex:column headerValue="Action" headerClass="TableLineActionHeader" styleClass="TableLineActionCell">
+                                     <apex:commandLink action="{!SearchLoan}" value="Select">
+                                         <apex:param assignTo="{!StudentId}" name="{!Student.Id}" value="{!Student.Id}" />
+                                     </apex:commandLink>
+                                </apex:column>
+                            <apex:column headerValue="Name" value="{!Student.Name}" headerClass="TableLineActionHeader" styleClass="TableLineStudentCell"/>
+                   </apex:pageBlockTable>
+</apex:pageBlockSection>
+
+
+                                            <div align="Center" class="StudentName" >                        
+<apex:pageBlockSection id="StudentFound" >
+                            
+                                <apex:outputText value="{!CurrentStudent}" rendered="{!StudentFound=True}"  />
+                               
+</apex:pageBlockSection>
+                                             </div>                        
+
+  <div align="Center" class="StudentName" >              
+<apex:pageBlockSection id="PendingLoans" rendered="{!ShowWarningBlock=true}" >
+                        
+                            <p class="WarningBlock">Student has books overdue</p>
+                        
+</apex:pageBlockSection>
+ </div>               
+
+
+<apex:pageBlockSection id="Loan_list" rendered="{!ShowLoansList=true}" >
+           
+                   <apex:pageBlockTable value="{!Loans}" var="StudentLoan" styleClass="TableLine" id="LoansTable" rendered="{!LoansListSize>0}">
+                      
+                            <apex:column headerValue="Action" headerClass="TableLineActionHeader" styleClass="TableLineActionCell"  >
+                                 <apex:commandLink action="{!ReturnBook}" value="Return" reRender="" title="Return">
+                                          <apex:param assignTo="{!LoanNumber}" name="{!StudentLoan.Id}" value="{!StudentLoan.Id}"/>
+                                 </apex:commandLink>
+                       
+                            </apex:column>
+                            <apex:column headerValue="Book Title" value="{!StudentLoan.BookName__c}" headerClass="TableLineActionHeader" styleClass="TableLineStudentCell"/>
+                            <apex:column headerValue="Expected Return Date"  value="{!StudentLoan.Expected_return_date__c}" style="{if(!StudentLoan.Expected_return_date__c < date.TODAY(),'background-color:green;','background-color:red;')}" headerClass="TableLineActionHeader" styleClass="TableLineStudentCell"/>
+                           
+                      
+                   </apex:pageBlockTable>
+  
+       
+
+</apex:pageBlockSection>
+        
+<div align="center">   
+<br/>                
+<apex:pageblockSection id="LoanBookCopy" >
+                    
+                        <apex:outputText ></apex:outputText>
+                        <apex:inputText styleclass="SearchLoanBar" value="{!searchBookCopy}" rendered="{!PendingLoans=False}" >Book Copy Code: </apex:inputText>
+                        <apex:commandButton id="SearchBook" Value="Lend"  action="{!LendBookcopy}" styleClass="LoanButton"  rendered="{!PendingLoans=False}" reRender="Loan_list,ErrorMessages"/>
+                
+</apex:pageblockSection>
+</div>                    
+                    <div align="center">
+                         <apex:pageMessages id="ErrorMessages" ></apex:pageMessages>
+                    </div>
+        
+        
+    </apex:pageBlock>
+                                                                    </div>    
+    
+    </body>
+    </apex:form>
+</apex:page>
