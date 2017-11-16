@@ -196,41 +196,25 @@ action="{!if($Profile.Name !='Student',
   </style>
   <apex:slds />
 
-   <apex:form >
+<apex:form >
   
-  <body >
-
-
-                                                                     
-                                                                      
-
-            <h1 class="headerTitulo">Library Loans</h1>
-            
-                                                                        <div class="SearchPanel">
-            <h2 Class="OverBlock">Student Search By Name</h2>
-                    
-           
-                                                                   
-
-                    
- 
-
-
-           
-      <apex:pageBlock >
+  <body >                                                       
+    <h1 class="headerTitulo">Library Loans</h1>
+    
+    <div class="SearchPanel">
+        <h2 Class="OverBlock">Student Search By Name</h2>
+        <apex:pageBlock >
       
       
- <apex:pageBlockSection id="SearchUsersBar">     
-                     
-                        <apex:inputText styleclass="SearchBar" value="{!searchStudent}" rendered="{!LoansListSize=0}"/>
-                        <apex:commandButton id="SearchButton" Value="Search" action="{!searchUsers}" styleClass="Button"  rendered="{!LoansListSize=0}" reRender="UsersTable,Loan_List"/>
-                        <br/><br/><br/><br/>
-                    
-</apex:pageBlockSection>      
+     <apex:pageBlockSection id="SearchUsersBar">                        
+        <apex:inputText styleclass="SearchBar" value="{!searchStudent}" rendered="{!LoansListSize=0}"/>
+        <apex:commandButton id="SearchButton" Value="Search" action="{!searchUsers}" styleClass="Button"  rendered="{!LoansListSize=0}" reRender="UsersTable"/>
+        <br/><br/><br/><br/>                   
+    </apex:pageBlockSection>      
       
  <apex:pageBlockSection id="ReturnButton">
  
-                <apex:commandButton id="ReturntoSearch" Value="Return to Search" styleClass="SearchButton" action="{!clearLoans}" rendered="{!LoansListSize>0}" reRender="SearchUsersBar,Loans_List,LoanBookCopy,UsersTable,ReturnButton,users_list,StudentFound"/>
+                <apex:commandButton id="ReturntoSearch" Value="Return to Search" styleClass="SearchButton" action="{!clearLoans}" rendered="{!LoansListSize>0}"  />
             <br/><br/><br/>
 </apex:pageBlockSection> 
 
@@ -238,41 +222,34 @@ action="{!if($Profile.Name !='Student',
 
      
 <apex:pageBlockSection id="users_list" >
-                   <apex:pageBlockTable value="{!allusers}" var="Student" styleClass="TableLine" id="UsersTable" rendered="{!LoansListSize=0}">
-                      
-                             <apex:column headerValue="Action" headerClass="TableLineActionHeader" styleClass="TableLineActionCell">
-                                     <apex:commandLink action="{!SearchLoan}" value="Select">
-                                         <apex:param assignTo="{!StudentId}" name="{!Student.Id}" value="{!Student.Id}" />
-                                     </apex:commandLink>
-                                </apex:column>
-                            <apex:column headerValue="Name" value="{!Student.Name}" headerClass="TableLineActionHeader" styleClass="TableLineStudentCell"/>
-                   </apex:pageBlockTable>
+   <apex:pageBlockTable value="{!allusers}" var="Student" styleClass="TableLine" id="UsersTable" rendered="{!LoansListSize=0}">
+      
+             <apex:column headerValue="Action" headerClass="TableLineActionHeader" styleClass="TableLineActionCell">
+                     <apex:commandLink action="{!SearchLoan}" value="Select" rendered="{!LoansListSize=0}" >
+                         <apex:param assignTo="{!StudentId}" name="{!Student.Id}" value="{!Student.Id}" />
+                     </apex:commandLink>
+                </apex:column>
+            <apex:column headerValue="Name" value="{!Student.Name}" headerClass="TableLineActionHeader" styleClass="TableLineStudentCell" rendered="{!LoansListSize=0}"/>
+   </apex:pageBlockTable>
 </apex:pageBlockSection>
 
 
-                                            <div align="Center" class="StudentName" >                        
-<apex:pageBlockSection id="StudentFound" >
-                            
-                                <apex:outputText value="{!CurrentStudent}" rendered="{!StudentFound=True}"  />
-                               
-</apex:pageBlockSection>
-                                             </div>                        
+<div align="Center" class="StudentName" >                        
+    <apex:pageBlockSection id="StudentFound" >
+                                
+    <apex:outputText value="{!CurrentStudent}" rendered="{!StudentFound=True}"  />
+                                   
+    </apex:pageBlockSection>
+</div>                        
 
   <div align="Center" class="StudentName" >              
-<apex:pageBlockSection id="PendingLoans" rendered="{!ShowWarningBlock=true}" >
-                        
-                            <p class="WarningBlock">Student has books overdue</p>
-                        
-</apex:pageBlockSection>
+    <apex:outputText id="PendingLoans"  styleClass="WarningBlock" value="Student has books overdue" rendered="{!ShowWarningBlock=true}"></apex:outputText>
  </div>               
 
-
-<apex:pageBlockSection id="Loan_list" rendered="{!ShowLoansList=true}" >
-           
                    <apex:pageBlockTable value="{!Loans}" var="StudentLoan" styleClass="TableLine" id="LoansTable" rendered="{!LoansListSize>0}">
                       
                             <apex:column headerValue="Action" headerClass="TableLineActionHeader" styleClass="TableLineActionCell"  >
-                                 <apex:commandLink action="{!ReturnBook}" value="Return" reRender="" title="Return">
+                                 <apex:commandLink action="{!ReturnBook}" value="Return" reRender="LoansTable,PendingLoans" title="Return">
                                           <apex:param assignTo="{!LoanNumber}" name="{!StudentLoan.Id}" value="{!StudentLoan.Id}"/>
                                  </apex:commandLink>
                        
@@ -282,10 +259,10 @@ action="{!if($Profile.Name !='Student',
                            
                       
                    </apex:pageBlockTable>
-  
+
        
 
-</apex:pageBlockSection>
+
         
 <div align="center">   
 <br/>                
@@ -293,7 +270,7 @@ action="{!if($Profile.Name !='Student',
                     
                         <apex:outputText ></apex:outputText>
                         <apex:inputText styleclass="SearchLoanBar" value="{!searchBookCopy}" rendered="{!PendingLoans=False}" >Book Copy Code: </apex:inputText>
-                        <apex:commandButton id="SearchBook" Value="Lend"  action="{!LendBookcopy}" styleClass="LoanButton"  rendered="{!PendingLoans=False}" reRender="Loan_list,ErrorMessages"/>
+                        <apex:commandButton id="SearchBook" Value="Lend"  action="{!LendBookcopy}" styleClass="LoanButton"  rendered="{!PendingLoans=False}" reRender="Loan_list,ErrorMessages,LoansTable,PendingLoans,UpdateLoans"/>
                 
 </apex:pageblockSection>
 </div>                    

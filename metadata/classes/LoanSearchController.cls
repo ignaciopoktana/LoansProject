@@ -37,20 +37,22 @@ public with sharing class LoanSearchController
         PendingLoans 		= true;
         StudentFound 		= false;
         ShowWarningBlock 	= false;
-        if(searchStudent=='' || searchStudent==null)
+        QueryPart 			= '';
+        Loans = new List<Loan__c>() ;
+        Profile prof    	= [select id from profile where name = 'Student'];
+        String QueryPart1 = prof.Id;
+        if(searchStudent==null)
+           {searchStudent='';}
+        if(searchStudent!='')
         {
-          QueryPart = '';
-            //if(searchStudent==''){System.debug('searchStudent is empty');}
-            //else{System.debug('searchStudent is null');}
+			System.debug('searchStudent ='+searchStudent);
+            QueryPart = ' where Name like \'%'+searchStudent+'%\'';           
         }
-        else
-        {
-            //System.debug('searchStudent ='+searchStudent);
-            QueryPart = 'where Name like \'%'+searchStudent+'%\'';
-            
-        }
+                        
+                
      		System.debug(QueryPart);
-    	   	return Database.query('select Id,Name from User '+ QueryPart+' order by Name asc limit 20');
+            return Database.query('select Id,Name from User where profileId=\''+QueryPart1+'\' '+ QueryPart+' order by Name asc limit 20');
+    	   	//return Database.query('select Id,Name from User where Profileid = :\''+QueryPart1+'\''+QueryPart+' order by Name asc limit 20');
      		
     }
     
@@ -66,23 +68,29 @@ public with sharing class LoanSearchController
     public pageReference SearchLoan()
     {
         
-        System.debug('Void SearchLoan');
-        System.debug('StudentId ='+StudentId);
-        PendingLoans = false;
+        System.debug('Start SearchLoan for student '+StudentId);
+        //System.debug('StudentId =');
+        PendingLoans     = false;
+        ShowWarningBlock = false;
         if(StudentId==null)
         {
             StudentId='';
         }
         System.debug('StudentId='+StudentId);
-            String Results = 'select  Name, BookName__c ,Expected_return_date__c from Loan__c where Student__c =\''+StudentId+'\' and Returned__C = False'; 
+        String Results = 'select  Name, BookName__c ,Expected_return_date__c from Loan__c where Student__c =\''+StudentId+'\' and Returned__C = False'; 
             
         	try
             {
-                User GetName 	= [select  Name from User where Id =:+StudentId];
+
+                User GetName 	= [select  Name from User where Id = :StudentId ];
                 CurrentStudent 	= 'Student: '+GetName.Name;
                 StudentFound	= True;
                 Loans 			= Database.query(Results + ' order by BookName__c asc limit 20');
-                ShowLoansList   = true;
+                System.debug('Check Loans size='+Loans.size());
+                if(Loans.size()>0)
+                {
+                	ShowLoansList   = true;
+                }
                 for(Loan__c checkDate:Loans)
                 {
                     if(checkDate.Expected_return_date__c < date.Today())
@@ -94,7 +102,7 @@ public with sharing class LoanSearchController
                     } 
                     
                 }    
-                System.debug('Loans size='+Loans.size());
+                System.debug('ShowWarningBlock '+ShowWarningBlock);
             }
             catch(Exception e)
             {
@@ -115,6 +123,7 @@ public with sharing class LoanSearchController
         PendingLoans     = true;
         ShowLoansList    = false;
         ShowWarningBlock = false;
+        getAllUsers();
         System.debug('Cleaning, loans size'+Loans.size());
         return null;
     }
@@ -123,18 +132,13 @@ public with sharing class LoanSearchController
     public void ReturnBook()
     {
         System.debug('Returnbook, id='+LoanNumber);
-        Loan__c ToBeReturned = [Select Name, Returned__c from Loan__c where id=:+LoanNumber];
+        Loan__c ToBeReturned = [Select Name, Returned__c from Loan__c where id=:+LoanNumber and Returned__c = false];
         ToBeReturned.Returned__c = True;
-        
-        try{
-            System.debug('Update Successful');
+		
+        if(ToBeReturned!=null){
             Database.update(ToBeReturned);
             SearchLoan();
-           }   
-        catch(Exception ex)
-        {
-            System.debug('Update Failed');
-        }
+        }    
     }
     
     public pageReference LendBookCopy()
@@ -153,6 +157,7 @@ public with sharing class LoanSearchController
             else
             {
                 System.debug('LendBook active true');
+                System.debug('StudentID for loan'+StudentId);
                 Loan__C BookToBook 					= new Loan__c();
                 BookToBook.Book_Copy__c 			= checkBook.Id;
                 BookToBook.Student__c				= StudentId;
@@ -160,6 +165,7 @@ public with sharing class LoanSearchController
                 BookToBook.Expected_return_date__c 	= date.today()+ 3;
                 BookToBook.Returned__c				= false;
                 insert BookToBook ;
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'The Loan has been Registered'));
             }
         }
         catch(Exception ex)
